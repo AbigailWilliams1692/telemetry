@@ -4,6 +4,7 @@
 # @Description: This module provides a class for tracing function calls
 # @Author: AbigailWilliams1692
 # @CreationDate: 2025-07-23
+# @LastUpdate: 2025-11-12
 #######################################################
 
 #######################################################
@@ -22,8 +23,8 @@ from typing import Callable
 # Third-Party Libraries
 
 # Local Libraries
-from log import get_logger
-from handler import Handler
+from telemetry.log import get_logger
+from telemetry.handler import Handler
 
 #######################################################
 # Logging Configuration
@@ -182,20 +183,21 @@ class TracerFactory:
             "result": result
         }
 
-    def _add_to_queue(self, record: dict) -> None:
+    def _add_to_queue(self, record: dict, to_block: bool = False) -> None:
         """
         Add a telemetry record to the queue.
 
         :param record: The telemetry record to add.
+        :param to_block: Whether to block if the queue is full.
         :return: None.
         """
         try:
-            self._queue.put(record, block=False)
+            self._queue.put(record, block=to_block)
             self._logger.debug(f"Record added to queue: {record}")
         except queue.Full:
             self._logger.warning("Queue is full, dropping record.")
             self.flush()
-            self._queue.put(record, block=False)
+            self._queue.put(record, block=to_block)
 
     def flush(self) -> None:
         """

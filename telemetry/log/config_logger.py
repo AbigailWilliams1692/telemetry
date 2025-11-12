@@ -31,7 +31,7 @@ def get_logger(name: str, log_level: int) -> logging.Logger:
     # Check if the logger already has handlers to avoid duplicate logs.
     if not logger.hasHandlers():
         handler = logging.StreamHandler()
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        formatter = logging.Formatter("[%(asctime)s] - [%(name)s] - [%(levelname)s] - [%(message)s]")
         handler.setFormatter(formatter)
         logger.addHandler(handler)
 

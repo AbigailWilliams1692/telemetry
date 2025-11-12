@@ -10,12 +10,21 @@
 # Import Libraries
 #######################################################
 # Standard Libraries
+import logging
 from abc import ABC, abstractmethod
 
 
 # Third-Party Libraries
 
 # Local Libraries
+from telemetry.log import get_logger
+
+
+#######################################################
+# Default Logger
+#######################################################
+_logger = get_logger(name=__name__, log_level=logging.DEBUG)
+
 
 #######################################################
 # Class: Handler Base
@@ -28,11 +37,14 @@ class Handler(ABC):
     ######################################################
     # Default Methods
     ######################################################
-    def __init__(self) -> None:
+    def __init__(self, logger: logging.Logger = _logger) -> None:
         """
         Constructor for the Handler class.
         """
         super().__init__()
+
+        # Set the Fields
+        self.logger = logger
 
     def __str__(self) -> str:
         """
