@@ -11,12 +11,20 @@
 #######################################################
 # Standard Libraries
 import csv
+import logging
 import os
 
 # Third-Party Libraries
 
 # Local Libraries
-from handler.handler import Handler
+from telemetry.handler.handler import Handler
+from telemetry.log import get_logger
+
+
+#######################################################
+# Default Logger
+#######################################################
+_logger = get_logger(name=__name__, log_level=logging.DEBUG)
 
 
 #######################################################
